@@ -10,11 +10,20 @@
 
 	{!! Form::open(['url' => 'tasks']) !!}
 	<div>
-	{!! Form::input('date','date', date('Y-m-d'),['class' => 'form-control']) !!}
+	{!! Form::input('date','date', date('d-m-Y'),['class' => 'form-control']) !!}
 	{!! $errors->first('date')!!}
 	</div>
 	<div>
-	{!! Form::input('time','hour', null, ['class' => 'form-control']) !!}
+	<?php 
+
+	$indexArray = array();
+	for ($i=0; $i < 24; $i++) { 
+		$indexArray[$i] = $i.':00 - '.($i+1).":00"; 
+	}
+	
+	?>
+
+	{!! Form::select('index', $indexArray) !!}
 	{!! $errors->first('hour')!!}
 	</div>
 	<div>

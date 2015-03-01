@@ -11,10 +11,11 @@ class AppointmentsController extends Controller {
 
 
 
-	public function __construct()
+	/*public function __construct()
 	{
 		$this->middleware('auth');
-	}
+	}*/
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -23,14 +24,47 @@ class AppointmentsController extends Controller {
 	public function index()
 	{
 		$id = Auth::id();
-		$example = Carbon::now()->format('Y-m-j') ;//'2015-02-18';
+		$today = Carbon::now()->format('Y-m-j') ;
 
-		$list = Appointment::where('user_id','=', $id)->where('date', '=', $example)->orderBy('time')->get();
+		$list = Appointment::where('user_id','=', $id)->where('date', '=', $today)->orderBy('time_index')->get();
 		$list->button = '<a href="tasks/all">View all</a>';
-		$list->btnurl= "url('tasks/all')";
+		$list->date = $today;
 		//var_dump($list);
-		return view('tasks.list')->with('list', $list);
+		return view('tasks.today')->with('list', $list);
 	}
+
+	public function weekSelect()
+	{
+
+		//$id = Auth::id();
+		$id = 1;
+		$today = Carbon::now()->format('Y-m-j');
+		$dayOfWeek = date('N');
+		//$daysToMonday = 8 - $dayOfWeek;
+		//$lastSunday = Carbon::now()->subDays($dayOfWeek-1)->format('Y-m-d');
+		//$sunday = str_replace("-", "", $lastSunday);
+		//$NextMonday= Carbon::now()->addDays($daysToMonday)->format('Y-m-j');
+		
+		$weekdays = array();
+		for ($i=0; $i <= 8; $i++) { 
+			if($dayOfWeek - $i > 0){
+
+				$weekdays[$i] = Carbon::now()->subDays($dayOfWeek-$i)->format('Y-m-d');
+			}else{
+				$weekdays[$i] = Carbon::now()->addDays($i - $dayOfWeek)->format('Y-m-d');
+			}
+		}
+        //var_dump($weekdays);
+		$list = Appointment::where('user_id','=', $id)->where('date', '>', $weekdays[0])->orderBy('date')->orderBy('time_index')->get();
+		$list->button = '<a href="tasks/all">View all</a>';
+		$list->date = $today;
+		$list->week = $weekdays;
+		var_dump($list->last());
+		
+		return view('tasks.week')->with('list', $list);
+	}
+
+
 
 	public function fullSelect()
 	{

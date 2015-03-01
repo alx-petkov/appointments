@@ -15,7 +15,7 @@ class Appointment extends Model {
 
 		$rules = array(
 			'date' => 'required|date',
-			'hour' => 'required',
+			'index' => 'required|integer',
 			'title' => 'required|min:4');
 
 		$validator = Validator::make($input,$rules);
@@ -35,7 +35,8 @@ class Appointment extends Model {
 		}else{
 			$this->user_id = Auth::id();
 			$this->date = $input['date'];
-			$this->time = $input['hour'];
+			//$this->time = $input['hour'];
+			$this->time_index = $input['index'];
 			$this->title = $input['title'];
 			$this->text = $input['text'];
 			$this->save();

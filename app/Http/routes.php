@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'AppointmentsController@index');
+Route::get('/tasks/week', 'AppointmentsController@weekSelect');
 Route::get('tasks/all', 'AppointmentsController@fullSelect');
 Route::resource('tasks', 'AppointmentsController');
 Route::get('home', 'AppointmentsController@index');
