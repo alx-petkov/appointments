@@ -2,9 +2,7 @@
 
 @section('content')
 <div class="container">
-	{!!$list->button!!}
-	<a href="{{url('tasks/create')}}" 
-	style="margin-left:20px;">Create New Task</a>
+	
 
 	<div>   
         Appointments for {!! $list->date !!}

@@ -53,6 +53,19 @@
 			</div>
 		</div>
 	</nav>
+	<div class="container" style="font-size:20px;">
+		<a href="{{url('tasks/')}}" class="btn btn-default">Today</a>
+		<a href="{{url('/tasks/week')}}" class="btn btn-default">This week</a>
+		<a href="{{url('tasks/all')}}" class="btn btn-default">All tasks</a>
+	</div>
+	<div class="col-lg-3 col-lg-offset-9">		
+		{!!Form::open(['action' => 'AppointmentsController@index', 'method'=>'get'])!!}
+		{!!Form::label('date', 'Create Appointment for:') !!}
+		{!! Form::input('date','date', date('d-m-Y'), ['class' => 'form-control', 'style' => 'width: 200px;' ]) !!}
+		{!! Form::submit('Go to date', ['class' => 'form-control btn btn-info', 'style' => 'width: 200px;']) !!}
+		{!! Form::close() !!}
+	</div>
+	
 
 	@yield('content')
 

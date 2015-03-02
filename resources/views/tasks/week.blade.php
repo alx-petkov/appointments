@@ -2,12 +2,10 @@
 
 @section('content')
 <div class="col-md-12 col-lg-12">
-	{!!$list->button!!}
-	<a href="{{url('tasks/create')}}" 
-	style="margin-left:20px;">Create New Task</a>
+	
 
 	<div>   
-        Appointments for {!! date('N') //$list->date 
+        Appointments for {!! $list->week[1].'/'.substr($list->week[7],-2)
         !!}
 	</div>
 @for($k = 1; $k < 8; $k++)

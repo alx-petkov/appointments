@@ -11,10 +11,10 @@ class AppointmentsController extends Controller {
 
 
 
-	/*public function __construct()
+	public function __construct()
 	{
 		$this->middleware('auth');
-	}*/
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -24,8 +24,13 @@ class AppointmentsController extends Controller {
 	public function index()
 	{
 		$id = Auth::id();
-		$today = Carbon::now()->format('Y-m-j') ;
-
+		$date = Request::all();
+		if(isset($date['date']) AND $date['date'] != 0){
+			$today = $date['date'];
+			
+		}else{
+			$today = Carbon::now()->format('Y-m-j');
+		}
 		$list = Appointment::where('user_id','=', $id)->where('date', '=', $today)->orderBy('time_index')->get();
 		$list->button = '<a href="tasks/all">View all</a>';
 		$list->date = $today;
@@ -59,7 +64,7 @@ class AppointmentsController extends Controller {
 		$list->button = '<a href="tasks/all">View all</a>';
 		$list->date = $today;
 		$list->week = $weekdays;
-		var_dump($list->last());
+		//var_dump($list->last());
 		
 		return view('tasks.week')->with('list', $list);
 	}
